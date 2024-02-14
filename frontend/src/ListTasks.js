@@ -13,12 +13,12 @@ const ListTask = () => {
     useEffect(() => {
         axios.get('http://localhost:8081/api/task')
             .then(response => {
-                // Assuming response.data is the array you've described
-                const tasks = response.data.map(item => item.body); // Extract the body from each item
+
+                const tasks = response.data.map(item => item.body);
                 const organizedTasks = {TODO: [], PROGRESS: [], DONE: []};
 
                 tasks.forEach(task => {
-                    const status = task.status.toUpperCase(); // Ensure the status is in uppercase to match your keys
+                    const status = task.status.toUpperCase();
                     if (organizedTasks.hasOwnProperty(status)) {
                         organizedTasks[status].push(task);
                     } else {
@@ -26,7 +26,7 @@ const ListTask = () => {
                     }
                 });
 
-                // console.log(organizedTasks);
+
                 setTasks(organizedTasks);
             })
             .catch(error => console.log(error));
@@ -36,7 +36,7 @@ const ListTask = () => {
         const {source, destination, draggableId} = result;
 
         if (!destination || (source.droppableId === destination.droppableId && source.index === destination.index)) {
-            return; // Item didn't move or was moved outside of any list
+            return;
         }
 
         const sourceKey = source.droppableId.toUpperCase();
@@ -44,7 +44,7 @@ const ListTask = () => {
         const movedTask = tasks[sourceKey].find(task => task.id === draggableId);
 
         if (movedTask) {
-            // First, update the local state to reflect the drag-and-drop action
+
             const startTasks = tasks[sourceKey].filter(task => task.id !== draggableId);
             const finishTasks = [...tasks[destinationKey], movedTask];
 
@@ -56,7 +56,7 @@ const ListTask = () => {
 
             setTasks(newTasksState);
 
-            // Then, update the task status on the server
+
             updateTaskStatus(movedTask, destinationKey);
         }
     };
@@ -87,7 +87,7 @@ const ListTask = () => {
                 return newTasks;
             });
         }
-        if (!updatedTask || !updatedTask.status) return; // Додано перевірку тут
+        if (!updatedTask?.status) return;
 
         setTasks(prevTasks => {
             const newTasks = {...prevTasks};
@@ -124,7 +124,7 @@ const ListTask = () => {
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                                 className="task-item"
-                                                onDoubleClick={() => handleDoubleClick(task)} // Handle double click to edit task
+                                                onDoubleClick={() => handleDoubleClick(task)}
                                             >
                                                 <div>{task.name}</div>
                                                 <div>{truncateDescription(task.description)}</div>

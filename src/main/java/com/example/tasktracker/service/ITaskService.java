@@ -1,17 +1,17 @@
 package com.example.tasktracker.service;
 
 import com.example.tasktracker.dto.TaskRequest;
-import com.example.tasktracker.dto.TaskResponse;
 import com.example.tasktracker.entity.Task;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface ITaskService {
-    Mono<TaskResponse> save(TaskRequest taskRequest);
+    Task save(TaskRequest taskRequest);
 
-    Flux<TaskResponse> getAllTasks();
+    List<Task> getAllTasks();
 
-    Mono<TaskResponse> updateTask(TaskRequest taskRequest);
+    Optional<Task> updateTask(TaskRequest taskRequest);
 
-    Mono<Task> delete(String id);
+    Task delete(String id);
 }

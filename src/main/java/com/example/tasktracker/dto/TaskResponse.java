@@ -17,6 +17,7 @@ public record TaskResponse(String id, String name, String description, String cr
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskResponse that = (TaskResponse) o;

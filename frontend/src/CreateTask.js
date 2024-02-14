@@ -1,14 +1,14 @@
 import axios from "axios";
 import {useState} from "react";
-import './CreateTask.css'; // Ensure your CSS styles are correctly named and imported
+import './CreateTask.css';
 
-const CreateTask = ({onClose}) => { // Accept onClose prop for closing the modal
+const CreateTask = ({onClose}) => {
     const [task, setTask] = useState({
         name: "",
         description: "",
     });
 
-    // No need for navigate as we will close the modal instead of navigating
+
     const handleChange = (e) => {
         const {name, value} = e.target;
         setTask(prevState => ({
@@ -31,7 +31,7 @@ const CreateTask = ({onClose}) => { // Accept onClose prop for closing the modal
     };
 
     return (
-        <div className="modal-container"> {/* Use a class that styles this div as a modal */}
+        <div className="modal-container">
             <div className="modal-content">
                 <button onClick={onClose} className="modal-close-button">X</button>
                 {/* Close button */}

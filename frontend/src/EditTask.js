@@ -1,9 +1,9 @@
 // EditTask.js
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import "./EditTask.css"
 
-const EditTask = ({ task, onClose }) => {
+const EditTask = ({task, onClose}) => {
     const [editedTask, setEditedTask] = useState({...task});
 
     useEffect(() => {
@@ -11,13 +11,13 @@ const EditTask = ({ task, onClose }) => {
     }, [task]);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setEditedTask(prevState => ({
             ...prevState,
             [name]: value
         }));
     };
-    // У EditTask.js
+
     const handleDeleteTask = () => {
         axios.delete(`http://localhost:8081/api/task/${task.id}`)
             .then(() => {
@@ -32,13 +32,12 @@ const EditTask = ({ task, onClose }) => {
         axios.put(`http://localhost:8081/api/task`, editedTask)
             .then(response => {
                 console.log(response);
-                onClose(editedTask); // Змінено тут
+                onClose(editedTask);
             })
             .catch(error => {
                 console.error("There was an error updating the task:", error);
             });
     };
-
 
 
     return (

@@ -1,18 +1,17 @@
 package com.example.tasktracker.mapper;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import com.example.tasktracker.dto.TaskRequest;
+import com.example.tasktracker.dto.TaskResponse;
+import com.example.tasktracker.entity.Status;
+import com.example.tasktracker.entity.Task;
+import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.example.tasktracker.entity.Status;
-import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
-
-import com.example.tasktracker.dto.TaskRequest;
-import com.example.tasktracker.dto.TaskResponse;
-import com.example.tasktracker.entity.Task;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TaskMapperTest {
 

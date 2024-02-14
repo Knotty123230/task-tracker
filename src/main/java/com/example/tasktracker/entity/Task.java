@@ -1,26 +1,24 @@
 package com.example.tasktracker.entity;
 
-import org.springframework.data.annotation.Id;
+
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "task")
 public class Task {
     @Id
     private UUID id;
     private LocalDateTime createdAt;
     private String name;
     private String description;
+    @Enumerated(value = EnumType.STRING)
     private Status status;
 
 
-    public Task(UUID id, LocalDateTime createdAt, String name, String description) {
-        this.id = id;
-        this.createdAt = createdAt;
-        this.name = name;
-        this.description = description;
-    }
 
     public Task() {
     }

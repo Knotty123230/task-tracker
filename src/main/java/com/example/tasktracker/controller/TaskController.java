@@ -2,63 +2,58 @@ package com.example.tasktracker.controller;
 
 import com.example.tasktracker.dto.TaskRequest;
 import com.example.tasktracker.dto.TaskResponse;
+import com.example.tasktracker.entity.Task;
+import com.example.tasktracker.mapper.TaskMapper;
 import com.example.tasktracker.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/task")
 public class TaskController {
-    Logger logger = LoggerFactory.getLogger(TaskController.class);
     private final TaskService taskService;
+    private final TaskMapper taskMapper;
+    Logger logger = LoggerFactory.getLogger(TaskController.class);
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, TaskMapper taskMapper) {
         this.taskService = taskService;
+        this.taskMapper = taskMapper;
     }
 
 
     @GetMapping
-    public Flux<ResponseEntity<?>> getAllTasks() {
-
-        Flux<TaskResponse> allTasks = taskService.getAllTasks();
-
-
-        allTasks.doOnNext(task -> logger.info(task.status()))
-                .subscribe();
-
-// Return a Flux<ResponseEntity<TaskResponse>>
-        return allTasks.map(ResponseEntity::ok);
-
+    public ResponseEntity<List<TaskResponse>> getAllTasks() {
+        return ResponseEntity.ok(taskService.getAllTasks().stream()
+                .map(taskMapper::taskToTaskResponse)
+                .toList());
     }
 
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<TaskResponse> createTask(@RequestBody TaskRequest taskRequest) {
-        Mono<TaskResponse> mono = taskService.save(taskRequest);
-        logger.info(mono.toString());
-        return mono;
+    public TaskResponse createTask(@RequestBody TaskRequest taskRequest) {
+        Task save = taskService.save(taskRequest);
+        logger.info(String.valueOf(save));
+        return taskMapper.taskToTaskResponse(save);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public Mono<TaskResponse> editTask(@RequestBody TaskRequest taskRequest) {
+    public TaskResponse editTask(@RequestBody TaskRequest taskRequest) {
         logger.info(taskRequest.toString());
-        return taskService.updateTask(taskRequest);
+        return taskMapper.taskToTaskResponse(taskService.updateTask(taskRequest).orElseThrow());
     }
 
     @DeleteMapping("/{id}")
-    public Mono<ResponseEntity<String>> deleteTask(@PathVariable String id) {
-        return taskService.delete(id)
-                .map(response -> ResponseEntity.ok("delete successful"));
+    public ResponseEntity<String> deleteTask(@PathVariable String id) {
+        taskService.delete(id);
+        return ResponseEntity.ok("task delete succesfull");
     }
 
 }
