@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,39 +16,39 @@ public class User {
 
     @JsonIgnore
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQ")
     @SequenceGenerator(name = "USER_SEQ", sequenceName = "USER_SEQ", allocationSize = 1)
     private Long id;
 
-    @Column(name = "USERNAME", length = 50, unique = true)
+    @Column(name = "username", length = 50, unique = true)
     @NotNull
     @Size(min = 4, max = 50)
     private String username;
 
     @JsonIgnore
-    @Column(name = "PASSWORD", length = 100)
+    @Column(name = "password", length = 100)
     @NotNull
     @Size(min = 4, max = 100)
     private String password;
 
-    @Column(name = "FIRSTNAME", length = 50)
+    @Column(name = "first_name", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
-    private String firstname;
+    private String firstName;
 
-    @Column(name = "LASTNAME", length = 50)
+    @Column(name = "last_name", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
-    private String lastname;
+    private String lastName;
 
-    @Column(name = "EMAIL", length = 50)
+    @Column(name = "email", length = 50)
     @NotNull
     @Size(min = 4, max = 50)
     private String email;
 
     @JsonIgnore
-    @Column(name = "ACTIVATED")
+    @Column(name = "activated")
     @NotNull
     private boolean activated;
 
@@ -55,7 +56,8 @@ public class User {
     @JoinTable(
             name = "USER_AUTHORITY",
             joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_NAME", referencedColumnName = "NAME")})
+            inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_NAME", referencedColumnName = "authority_name")})
+    @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
     public User() {
@@ -85,20 +87,20 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstname) {
+        this.firstName = firstname;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
     }
 
     public String getEmail() {
@@ -143,8 +145,8 @@ public class User {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
+                ", firstname='" + firstName + '\'' +
+                ", lastname='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", activated=" + activated +
                 '}';

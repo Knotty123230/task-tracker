@@ -1,8 +1,11 @@
 package com.example.tasktracker.controller;
 
 import com.example.tasktracker.dto.LoginDto;
+import com.example.tasktracker.dto.RegistrationRequest;
+import com.example.tasktracker.entity.User;
 import com.example.tasktracker.jwt.JWTFilter;
 import com.example.tasktracker.jwt.TokenProvider;
+import com.example.tasktracker.service.UserService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
@@ -12,24 +15,24 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller to authenticate users.
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 public class AuthenticationRestController {
 
     private final TokenProvider tokenProvider;
+    private final UserService userService;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public AuthenticationRestController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    public AuthenticationRestController(TokenProvider tokenProvider, UserService userService, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.tokenProvider = tokenProvider;
+        this.userService = userService;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
@@ -49,6 +52,12 @@ public class AuthenticationRestController {
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+    }
+
+    @PostMapping("/registration")
+    public ResponseEntity<String> registration(@RequestBody RegistrationRequest registrationRequest) {
+        User save = userService.save(registrationRequest);
+        return ResponseEntity.ok("user successfully registered: username - %s".formatted(save.getUsername()));
     }
 
     /**

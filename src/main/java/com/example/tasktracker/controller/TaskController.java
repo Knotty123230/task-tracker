@@ -43,11 +43,12 @@ public class TaskController {
         return taskMapper.taskToTaskResponse(save);
     }
 
+
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public TaskResponse editTask(@RequestBody TaskRequest taskRequest) {
         logger.info(taskRequest.toString());
-        return taskMapper.taskToTaskResponse(taskService.updateTask(taskRequest).orElseThrow());
+        return taskMapper.taskToTaskResponse(taskService.updateTask(taskRequest));
     }
 
     @DeleteMapping("/{id}")

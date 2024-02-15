@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
+
 import java.util.Objects;
 
 @Entity
@@ -13,7 +14,7 @@ import java.util.Objects;
 public class Authority {
 
     @Id
-    @Column(name = "NAME", length = 50)
+    @Column(name = "authority_name", length = 50)
     @NotNull
     private String name;
 
