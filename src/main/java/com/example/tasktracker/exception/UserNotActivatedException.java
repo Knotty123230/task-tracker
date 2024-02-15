@@ -1,4 +1,4 @@
-package com.example.tasktracker.service;
+package com.example.tasktracker.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

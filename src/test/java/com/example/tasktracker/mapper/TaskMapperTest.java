@@ -31,7 +31,7 @@ class TaskMapperTest {
 
         assertNotNull(taskResponse);
         assertEquals(id.toString(), taskResponse.id());
-        assertEquals("2024-02-12T10:30:00", taskResponse.createdAt()); // Assuming date format as string
+        assertEquals("2024-02-12T10:30:00", taskResponse.createdAt());
     }
 
     @Test

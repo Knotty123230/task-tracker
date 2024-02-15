@@ -6,6 +6,7 @@ import com.example.tasktracker.entity.User;
 import com.example.tasktracker.mapper.UserMapper;
 import com.example.tasktracker.repository.AuthorityRepository;
 import com.example.tasktracker.repository.UserRepository;
+import com.example.tasktracker.utils.SecurityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,13 +19,11 @@ import java.util.Set;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final AuthorityRepository authorityRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, AuthorityRepository authorityRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.authorityRepository = authorityRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
     }

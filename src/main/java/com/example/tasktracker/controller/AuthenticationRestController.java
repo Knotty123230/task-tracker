@@ -61,20 +61,14 @@ public class AuthenticationRestController {
     }
 
     /**
-     * Object to return as body in JWT Authentication.
-     */
-    static class JWTToken {
+         * Object to return as body in JWT Authentication.
+         */
+        record JWTToken(String idToken) {
 
-        private String idToken;
-
-        JWTToken(String idToken) {
-            this.idToken = idToken;
-        }
-
+        @Override
         @JsonProperty("id_token")
-        String getIdToken() {
-            return idToken;
+        public String idToken() {
+                return idToken;
+            }
         }
-
-    }
 }

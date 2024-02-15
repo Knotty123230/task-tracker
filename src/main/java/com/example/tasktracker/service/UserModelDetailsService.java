@@ -1,6 +1,7 @@
 package com.example.tasktracker.service;
 
 import com.example.tasktracker.entity.User;
+import com.example.tasktracker.exception.UserNotActivatedException;
 import com.example.tasktracker.repository.UserRepository;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;

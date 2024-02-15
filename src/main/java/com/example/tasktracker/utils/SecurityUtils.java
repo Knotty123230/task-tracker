@@ -1,4 +1,4 @@
-package com.example.tasktracker.service;
+package com.example.tasktracker.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
