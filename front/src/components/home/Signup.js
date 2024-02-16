@@ -3,7 +3,7 @@ import { NavLink, Navigate } from 'react-router-dom'
 import { Button, Form, Grid, Segment, Message } from 'semantic-ui-react'
 import { useAuth } from '../auth/AuthContext'
 import {TaskApi} from '../misc/TaskApi'
-import { parseJwt, handleLogError } from '../misc/Helpers'
+import {handleLogError } from '../misc/Helpers'
 
 function Signup() {
   const Auth = useAuth()
@@ -48,10 +48,10 @@ function Signup() {
     try {
       const response = await TaskApi.signup(user)
       const { accessToken } = response.data
-      const data = parseJwt(accessToken)
-      const authenticatedUser = { data, accessToken }
+      // const data = parseJwt(accessToken)
+      // const authenticatedUser = { data, accessToken }
 
-      Auth.userLogin(authenticatedUser)
+      // Auth.userLogin(authenticatedUser)
 
       setUsername('')
       setPassword('')

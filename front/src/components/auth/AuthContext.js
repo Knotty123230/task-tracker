@@ -1,4 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from 'react'
+import {parseJwt} from "../misc/Helpers";
 
 export const AuthContext = createContext()
 
@@ -6,37 +7,39 @@ function AuthProvider({children}) {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        const storedUser = JSON.parse(localStorage.getItem('user'))
+        const storedUser = localStorage.getItem('user')
         setUser(storedUser)
     }, [])
 
     const getUser = () => {
-        return JSON.parse(localStorage.getItem('user'))
+        console.log(localStorage.getItem('user'))
+
+        return localStorage.getItem('user')
+
     }
 
     const userIsAuthenticated = () => {
-        let storedUser = localStorage.getItem('user');
-        console.log(storedUser)
+        const storedUser = localStorage.getItem('user');
+        if (storedUser === null) {
+            return false
+        }
+
         if (!storedUser) {
             return false;
         }
-        storedUser = JSON.parse(storedUser);
-
-        if (!storedUser.data) {
-            return false;
+        const jwt = parseJwt(storedUser);
+        if (jwt.exp < Date.now() / 1000) {
+            return false
         }
 
-        // if user has token expired, logout user
-        if (Date.now() > storedUser.data.exp * 1000) {
-            userLogout();
-            return false;
-        }
-        return true;
+        return storedUser;
+
     }
 
 
     const userLogin = user => {
-        localStorage.setItem('user', JSON.stringify(user))
+        console.log("user : " + user)
+        localStorage.setItem('user', user)
         setUser(user)
     }
 

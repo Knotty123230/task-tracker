@@ -4,6 +4,7 @@ import {parseJwt} from './Helpers'
 export const TaskApi = {
     authenticate,
     signup,
+    allTasks
 }
 
 function authenticate(username, password) {
@@ -12,19 +13,20 @@ function authenticate(username, password) {
     })
 }
 
- function signup(user) {
+function signup(user) {
     return instance.post('/registration', user, {
         headers: {'Content-type': 'application/json'}
     })
 }
-// function allTasks() {
-//     return instance.get('task'{
-//         headers: {
-//             'Content-type': 'application/json',
-//             'Authorization': bearerAuth(user)
-//         }
-//     })
-// }
+
+function allTasks(user) {
+    return instance.get('/task', {
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': bearerAuth(user)
+        }
+    })
+}
 
 
 const instance = axios.create({
@@ -35,10 +37,7 @@ const instance = axios.create({
 instance.interceptors.request.use(function (config) {
     if (config.headers.Authorization) {
         const token = config.headers.Authorization.split(' ')[1]
-        const data = parseJwt(token)
-        if (Date.now() > data.exp * 1000) {
-            window.location.href = "/login"
-        }
+        console.log(token)
     }
     return config
 }, function (error) {
@@ -48,5 +47,5 @@ instance.interceptors.request.use(function (config) {
 // -- Helper functions
 
 function bearerAuth(user) {
-    return `Bearer ${user.id_token}`
+    return `Bearer ${user}`
 }

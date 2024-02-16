@@ -3,7 +3,7 @@ import {NavLink, Navigate} from 'react-router-dom'
 import { Button, Form, Grid, Segment, Message } from 'semantic-ui-react'
 import { useAuth } from '../auth/AuthContext'
 import {TaskApi} from '../misc/TaskApi'
-import { parseJwt, handleLogError } from '../misc/Helpers'
+import { handleLogError } from '../misc/Helpers'
 
 function Login() {
     const Auth = useAuth()
@@ -32,16 +32,14 @@ function Login() {
 
         try {
             const response = await TaskApi.authenticate(username, password)
-            console.log(response.data)
-            const { accessToken } = response.data
-            const data = parseJwt(accessToken)
-            const authenticatedUser = { data, accessToken }
 
-            Auth.userLogin(authenticatedUser)
+
+            Auth.userLogin(response.data.id_token)
 
             setUsername('')
             setPassword('')
             setIsError(false)
+            return <Navigate to={'/tasks'} />
         } catch (error) {
             handleLogError(error)
             setIsError(true)
@@ -49,7 +47,7 @@ function Login() {
     }
 
     if (isLoggedIn) {
-        return <Navigate to={'/'} />
+        return <Navigate to={'/tasks'} />
     }
 
     return (
