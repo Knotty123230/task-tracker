@@ -17,10 +17,13 @@ import java.util.UUID;
 public class TaskService implements ITaskService {
 
     private final TaskRepository taskRepository;
+    private final FileService fileService;
     private final TaskMapper taskMapper;
 
-    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper) {
+    public TaskService(TaskRepository taskRepository,  FileService fileService, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
+        this.fileService = fileService;
+
         this.taskMapper = taskMapper;
     }
 
@@ -47,6 +50,7 @@ public class TaskService implements ITaskService {
             task.setDescription(taskRequest.description());
             task.setName(taskRequest.name());
             task.setStatus(taskRequest.status());
+
             return taskRepository.save(optionalTask.orElseThrow());
         }
         throw new NotFoundException("task not found");
@@ -58,6 +62,11 @@ public class TaskService implements ITaskService {
         Optional<Task> optionalTask = taskRepository.findById(UUID.fromString(id));
         optionalTask.ifPresent(taskRepository::delete);
         return optionalTask.orElseThrow(() -> new NotFoundException("task not found"));
+    }
+
+    @Override
+    public Task findById(String id) {
+        return taskRepository.findById(UUID.fromString(id)).orElseThrow();
     }
 
 }

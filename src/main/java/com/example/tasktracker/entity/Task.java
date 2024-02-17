@@ -17,10 +17,18 @@ public class Task {
     private String description;
     @Enumerated(value = EnumType.STRING)
     private Status status;
-
-
+    @OneToOne
+    private File file;
 
     public Task() {
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public UUID getId() {
@@ -60,12 +68,12 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(createdAt, task.createdAt) && Objects.equals(name, task.name) && Objects.equals(description, task.description);
+        return Objects.equals(id, task.id) && Objects.equals(createdAt, task.createdAt) && Objects.equals(name, task.name) && Objects.equals(description, task.description) && status == task.status && Objects.equals(file, task.file);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createdAt, name, description);
+        return Objects.hash(id, createdAt, name, description, status, file);
     }
 
     @Override
@@ -75,6 +83,8 @@ public class Task {
                 ", createdAt=" + createdAt +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", status=" + status +
+                ", file=" + file +
                 '}';
     }
 

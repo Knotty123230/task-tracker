@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -37,7 +38,7 @@ public class TaskController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TaskResponse createTask(@RequestBody TaskRequest taskRequest) {
+    public TaskResponse createTask(@RequestBody TaskRequest taskRequest) throws IOException {
         Task save = taskService.save(taskRequest);
         logger.info("task request : {}", save);
         return taskMapper.taskToTaskResponse(save);
