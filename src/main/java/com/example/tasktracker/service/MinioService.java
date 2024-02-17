@@ -42,11 +42,11 @@ public class MinioService {
         }
     }
 
-    public byte[] findByName(String name){
+    public byte[] findByName(String name) {
         try {
             GetObjectResponse object = minioClient.getObject(GetObjectArgs.builder()
                     .object(name)
-                            .bucket(MinioUtils.getBucketNameByFileName(name))
+                    .bucket(MinioUtils.getBucketNameByFileName(name))
                     .build());
             return object.readAllBytes();
 

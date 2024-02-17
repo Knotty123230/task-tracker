@@ -13,5 +13,6 @@ public interface ITaskService {
     Task updateTask(TaskRequest taskRequest);
 
     Task delete(String id);
+
     Task findById(String id);
 }

@@ -22,6 +22,10 @@ public class File {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "File{" +
@@ -43,10 +47,6 @@ public class File {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, size, addedAt);
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getName() {

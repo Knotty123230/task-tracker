@@ -7,27 +7,24 @@ import io.minio.errors.MinioException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.boot.ApplicationRunner;
 
 import java.util.Arrays;
 
 @Configuration
 public class MinioConfig {
 
+    Logger logger = LoggerFactory.getLogger(MinioConfig.class);
     @Value("${minio.url}")
     private String MINIO_URL;
-
     @Value("${minio.access.name}")
     private String MINIO_ACCESS_KEY;
-
     @Value("${minio.access.secret}")
     private String MINIO_SECRET_KEY;
-
     @Value("${minio.bucket.name}")
     private String BUCKET_NAMES;
-    Logger logger = LoggerFactory.getLogger(MinioConfig.class);
 
     @Bean
     MinioClient minioClient() {

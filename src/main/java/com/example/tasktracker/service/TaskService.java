@@ -20,7 +20,7 @@ public class TaskService implements ITaskService {
     private final FileService fileService;
     private final TaskMapper taskMapper;
 
-    public TaskService(TaskRepository taskRepository,  FileService fileService, TaskMapper taskMapper) {
+    public TaskService(TaskRepository taskRepository, FileService fileService, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.fileService = fileService;
 
