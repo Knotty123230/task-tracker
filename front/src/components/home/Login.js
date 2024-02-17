@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import {NavLink, Navigate} from 'react-router-dom'
-import { Button, Form, Grid, Segment, Message } from 'semantic-ui-react'
-import { useAuth } from '../auth/AuthContext'
+import React, {useState} from 'react'
+import {Navigate, NavLink} from 'react-router-dom'
+import {Button, Form, Grid, Message, Segment} from 'semantic-ui-react'
+import {useAuth} from '../auth/AuthContext'
 import {TaskApi} from '../misc/TaskApi'
-import { handleLogError } from '../misc/Helpers'
+import {handleLogError} from '../misc/Helpers'
 
 function Login() {
     const Auth = useAuth()
@@ -14,7 +14,7 @@ function Login() {
     const [isError, setIsError] = useState(false)
 
 
-    const handleInputChange = (e, { name, value }) => {
+    const handleInputChange = (e, {name, value}) => {
         if (name === 'username') {
             setUsername(value)
         } else if (name === 'password') {
@@ -39,7 +39,7 @@ function Login() {
             setUsername('')
             setPassword('')
             setIsError(false)
-            return <Navigate to={'/tasks'} />
+            return <Navigate to={'/tasks'}/>
         } catch (error) {
             handleLogError(error)
             setIsError(true)
@@ -47,12 +47,12 @@ function Login() {
     }
 
     if (isLoggedIn) {
-        return <Navigate to={'/tasks'} />
+        return <Navigate to={'/tasks'}/>
     }
 
     return (
         <Grid textAlign='center'>
-            <Grid.Column style={{ maxWidth: 450 }}>
+            <Grid.Column style={{maxWidth: 450}}>
                 <Form size='large' onSubmit={handleSubmit}>
                     <Segment>
                         <Form.Input

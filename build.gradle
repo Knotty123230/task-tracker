@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.springframework:spring-jdbc'
+    implementation 'io.minio:minio:8.5.2'
 
 
     implementation 'org.springframework.data:spring-data-jpa:3.2.2'

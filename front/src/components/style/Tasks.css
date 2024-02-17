@@ -1,0 +1,77 @@
+.tasksBoard {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #f4f5f7; /* Adjust the background color if necessary */
+}
+
+.column {
+    background-color: #ebecf0;
+    border-radius: 3px;
+    width: 300px; /* Adjust the width as necessary */
+    margin: 0 10px;
+    padding: 20px;
+}
+
+.column h2 {
+    font-size: 20px;
+    padding: 10px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #5e6c84; /* Adjust text color as necessary */
+}
+
+.taskList {
+    min-height: 50px;
+}
+
+.taskItem {
+    background-color: #ffffff;
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 0 rgba(9, 30, 66, .25);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.taskItem.dragging {
+    background-color: #e1e2e5; /* Slightly different background for dragging */
+}
+
+.taskContent {
+    /* Style for the task content */
+}
+
+.taskContent p {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.taskContent span {
+    color: #5e6c84; /* Adjust text color as necessary */
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.taskMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    font-size: 12px;
+}
+
+.taskMeta span {
+    background-color: #dfe1e6;
+    border-radius: 2px;
+    padding: 2px 6px;
+}
+
+/* Add more styles for other elements as needed */
+
+/* Styles when dragging over column */
+.column.dragOver {
+    background-color: #dfe1e6; /* Color when a draggable item is over the column */
+}

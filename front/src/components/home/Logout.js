@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useAuth } from "../auth/AuthContext";
-import { Navigate } from "react-router-dom";
+import {useState} from 'react';
+import {useAuth} from "../auth/AuthContext";
+import {Navigate} from "react-router-dom";
 
 const Logout = () => {
     const [isLoggedOut, setIsLoggedOut] = useState(false);
@@ -12,7 +12,7 @@ const Logout = () => {
     }
 
     if (isLoggedOut) {
-        return <Navigate to="/login" />;
+        return <Navigate to="/login"/>;
     }
 
     return (

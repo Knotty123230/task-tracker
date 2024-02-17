@@ -1,71 +1,61 @@
-import React, {createContext, useContext, useEffect, useState} from 'react'
+import React, {createContext, useCallback, useContext, useEffect, useMemo, useState} from 'react';
 import {parseJwt} from "../misc/Helpers";
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
 function AuthProvider({children}) {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user')
-        setUser(storedUser)
-    }, [])
+        const storedUser = localStorage.getItem('user');
+        setUser(storedUser);
+    }, []);
 
-    const getUser = () => {
-        console.log(localStorage.getItem('user'))
+    const getUser = useCallback(() => {
+        return localStorage.getItem('user');
+    }, []);
 
-        return localStorage.getItem('user')
-
-    }
-
-    const userIsAuthenticated = () => {
+    const userIsAuthenticated = useCallback(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser === null) {
-            return false
+            return false;
         }
 
         if (!storedUser) {
             return false;
         }
         const jwt = parseJwt(storedUser);
-        if (jwt.exp < Date.now() / 1000) {
-            return false
-        }
+        return jwt.exp >= Date.now() / 1000;
+    }, []);
 
-        return storedUser;
+    const userLogin = useCallback((user) => {
+        console.log("user: " + user);
+        localStorage.setItem('user', user);
+        setUser(user);
+    }, []);
 
-    }
+    const userLogout = useCallback(() => {
+        localStorage.removeItem('user');
+        setUser(null);
+    }, []);
 
-
-    const userLogin = user => {
-        console.log("user : " + user)
-        localStorage.setItem('user', user)
-        setUser(user)
-    }
-
-    const userLogout = () => {
-        localStorage.removeItem('user')
-        setUser(null)
-    }
-
-    const contextValue = {
+    const contextValue = useMemo(() => ({
         user,
         getUser,
         userIsAuthenticated,
         userLogin,
         userLogout,
-    }
+    }), [user, getUser, userIsAuthenticated, userLogin, userLogout]);
 
     return (
         <AuthContext.Provider value={contextValue}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 }
-
 
 export function useAuth() {
-    return useContext(AuthContext)
+    return useContext(AuthContext);
 }
 
-export {AuthProvider}
+export {AuthProvider};

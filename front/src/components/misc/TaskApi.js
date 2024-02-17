@@ -1,10 +1,30 @@
 import axios from 'axios'
-import {parseJwt} from './Helpers'
 
 export const TaskApi = {
     authenticate,
     signup,
-    allTasks
+    allTasks,
+    createTask,
+    deleteTask,
+    editTask
+}
+
+function deleteTask(id, user) {
+    return instance.delete(`/task/${id}`, {
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': bearerAuth(user)
+        }
+    })
+}
+
+function editTask(task, user) {
+    return instance.put(`/task`, task, {
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': bearerAuth(user)
+        }
+    })
 }
 
 function authenticate(username, password) {
@@ -21,6 +41,15 @@ function signup(user) {
 
 function allTasks(user) {
     return instance.get('/task', {
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': bearerAuth(user)
+        }
+    })
+}
+
+function createTask(task, user) {
+    return instance.post('/task', task, {
         headers: {
             'Content-type': 'application/json',
             'Authorization': bearerAuth(user)

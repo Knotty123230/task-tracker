@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/task")
 public class TaskController {
     private final TaskService taskService;
@@ -29,6 +28,7 @@ public class TaskController {
 
     @GetMapping
     public ResponseEntity<List<TaskResponse>> getAllTasks() {
+        logger.info("all tasks controller");
         return ResponseEntity.ok(taskService.getAllTasks().stream()
                 .map(taskMapper::taskToTaskResponse)
                 .toList());
@@ -39,7 +39,7 @@ public class TaskController {
     @ResponseStatus(HttpStatus.CREATED)
     public TaskResponse createTask(@RequestBody TaskRequest taskRequest) {
         Task save = taskService.save(taskRequest);
-        logger.info(String.valueOf(save));
+        logger.info("task request : {}", save);
         return taskMapper.taskToTaskResponse(save);
     }
 
@@ -47,13 +47,14 @@ public class TaskController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public TaskResponse editTask(@RequestBody TaskRequest taskRequest) {
-        logger.info(taskRequest.toString());
+        logger.info("task edit controller {} ", taskRequest);
         return taskMapper.taskToTaskResponse(taskService.updateTask(taskRequest));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable String id) {
         taskService.delete(id);
+        logger.info("task deleted with id : {}", id);
         return ResponseEntity.ok("task delete succesfull");
     }
 

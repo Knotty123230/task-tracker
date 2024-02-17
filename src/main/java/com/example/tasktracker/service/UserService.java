@@ -4,7 +4,6 @@ import com.example.tasktracker.dto.RegistrationRequest;
 import com.example.tasktracker.entity.Authority;
 import com.example.tasktracker.entity.User;
 import com.example.tasktracker.mapper.UserMapper;
-import com.example.tasktracker.repository.AuthorityRepository;
 import com.example.tasktracker.repository.UserRepository;
 import com.example.tasktracker.utils.SecurityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;

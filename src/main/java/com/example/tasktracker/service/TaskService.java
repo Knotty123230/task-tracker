@@ -34,7 +34,6 @@ public class TaskService implements ITaskService {
 
     @Override
     public List<Task> getAllTasks() {
-
         return taskRepository.findAll();
 
     }
@@ -43,8 +42,10 @@ public class TaskService implements ITaskService {
     @Transactional
     public Task updateTask(TaskRequest taskRequest) {
         Optional<Task> optionalTask = taskRepository.findById(UUID.fromString(taskRequest.id()));
-        if (optionalTask.isPresent()){
+        if (optionalTask.isPresent()) {
             Task task = optionalTask.get();
+            task.setDescription(taskRequest.description());
+            task.setName(taskRequest.name());
             task.setStatus(taskRequest.status());
             return taskRepository.save(optionalTask.orElseThrow());
         }
@@ -56,7 +57,7 @@ public class TaskService implements ITaskService {
     public Task delete(String id) {
         Optional<Task> optionalTask = taskRepository.findById(UUID.fromString(id));
         optionalTask.ifPresent(taskRepository::delete);
-        throw new NotFoundException("task not found with id %s".formatted(id));
+        return optionalTask.orElseThrow(() -> new NotFoundException("task not found"));
     }
 
 }

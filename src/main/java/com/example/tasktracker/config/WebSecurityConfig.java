@@ -34,7 +34,7 @@ public class WebSecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .authorizeHttpRequests(http -> http.requestMatchers("/api/authenticate", "/api/registration").permitAll()
+                .authorizeHttpRequests(http -> http.requestMatchers("/api/authenticate", "/api/registration", "/*").permitAll()
                         .requestMatchers("/api/task")
                         .hasRole("USER")
                         .anyRequest().authenticated())
