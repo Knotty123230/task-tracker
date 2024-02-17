@@ -42,9 +42,7 @@ public class MinioConfig {
                 boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(name).build());
                 if (!isExist) {
                     try {
-
                         minioClient.makeBucket(MakeBucketArgs.builder().bucket(name).build());
-
                         logger.info("Bucket created successfully");
                     } catch (MinioException e) {
                         throw new RuntimeException("Error creating buckets: " + Arrays.toString(names), e);

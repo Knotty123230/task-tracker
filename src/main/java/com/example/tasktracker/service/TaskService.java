@@ -17,12 +17,10 @@ import java.util.UUID;
 public class TaskService implements ITaskService {
 
     private final TaskRepository taskRepository;
-    private final FileService fileService;
     private final TaskMapper taskMapper;
 
-    public TaskService(TaskRepository taskRepository, FileService fileService, TaskMapper taskMapper) {
+    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
-        this.fileService = fileService;
 
         this.taskMapper = taskMapper;
     }
