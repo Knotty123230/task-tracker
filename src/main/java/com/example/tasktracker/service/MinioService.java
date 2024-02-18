@@ -48,6 +48,7 @@ public class MinioService {
                     .object(name)
                     .bucket(MinioUtils.getBucketNameByFileName(name))
                     .build());
+
             return object.readAllBytes();
 
         } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException |
