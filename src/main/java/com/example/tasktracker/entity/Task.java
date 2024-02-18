@@ -23,6 +23,21 @@ public class Task {
     public Task() {
     }
 
+    public Task(UUID id, LocalDateTime createdAt, String name, String description, Status status) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+    }
+
+    public Task(UUID id, String name, String description, Status status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+    }
+
     public File getFile() {
         return file;
     }

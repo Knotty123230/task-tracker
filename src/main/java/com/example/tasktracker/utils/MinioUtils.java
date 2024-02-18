@@ -1,7 +1,8 @@
 package com.example.tasktracker.utils;
 
 public class MinioUtils {
-    private MinioUtils(){}
+    private MinioUtils() {
+    }
 
     public static String getBucketName(String contentType) {
         switch (contentType) {
