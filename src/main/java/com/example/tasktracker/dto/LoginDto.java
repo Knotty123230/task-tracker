@@ -19,6 +19,12 @@ public class LoginDto {
 
     private Boolean rememberMe;
 
+    public LoginDto(String username, String password, Boolean rememberMe) {
+        this.username = username;
+        this.password = password;
+        this.rememberMe = rememberMe;
+    }
+
     public String getUsername() {
         return username;
     }

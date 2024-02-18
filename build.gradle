@@ -31,7 +31,7 @@ dependencies {
     implementation 'io.minio:minio:8.5.2'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 
-
+    testImplementation 'org.mockito:mockito-core:5.3.1'
     implementation 'org.springframework.data:spring-data-jpa:3.2.2'
 
     implementation 'javax.persistence:javax.persistence-api:2.2'
@@ -53,6 +53,11 @@ dependencies {
 
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    implementation 'org.springframework.security:spring-security-test'
+
+    // https://mvnrepository.com/artifact/junit/junit
+    testImplementation 'junit:junit:4.12'
 
 
 }
