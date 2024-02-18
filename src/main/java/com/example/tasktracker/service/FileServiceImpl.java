@@ -2,6 +2,7 @@ package com.example.tasktracker.service;
 
 import com.example.tasktracker.entity.File;
 import com.example.tasktracker.entity.Task;
+import com.example.tasktracker.exception.NotFoundException;
 import com.example.tasktracker.repository.FileRepository;
 import com.example.tasktracker.repository.TaskRepository;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void save(String taskId, MultipartFile file) {
-        Task byId = taskRepository.findById(UUID.fromString(taskId)).orElseThrow();
+        Task byId = taskRepository.findById(UUID.fromString(taskId)).orElseThrow(() -> new NotFoundException("Task not found with id %s".formatted(taskId)));
         File resultFile = new File();
         resultFile.setId(UUID.randomUUID());
         resultFile.setName(file.getOriginalFilename());
